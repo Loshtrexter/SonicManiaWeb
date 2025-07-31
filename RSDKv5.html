@@ -124,26 +124,27 @@
 				outline: none;
 			}
 			#touch-controls {
-  			  	position: fixed;
-  			  	bottom: 10px;
-  			  	width: 100%;
-  			  	display: flex;
-  			  	justify-content: space-around;
-  			  	z-index: 9999;
+  				position: fixed;
+  				bottom: 10px;
+  				width: 100%;
+  				display: flex;
+  				justify-content: space-around;
+  				z-index: 9999;
+  				user-select: none;
 			}
 			#touch-controls button {
-  			  	pointer-events: auto;
-  			  	font-size: 2.5rem;
-  			  	background: rgba(255,255,255,0.15);
- 			  	border: none;
-  			  	border-radius: 12px;
- 			  	padding: 10px 20px;
-  			  	color: white;
-  			  	user-select: none;
-  			  	touch-action: manipulation;
+  				font-size: 2.5rem;
+  				background: rgba(255,255,255,0.5);
+  				border: none;
+  				border-radius: 12px;
+  				padding: 10px 15px;
+  				color: black;
+  				touch-action: none; /* important for multi-touch */
+  				-webkit-tap-highlight-color: transparent; /* disables tap highlight on iOS */
 			}
 			#touch-controls button:active {
- 			  	background: rgba(255,255,255,0.5);
+ 				background: rgba(255,255,255,0.8);
+
 			}
 		</style>
 	</head>
@@ -154,12 +155,75 @@
 		<canvas id="canvas" onclick="window.focus();" oncontextmenu="event.preventDefault();"></canvas>
 		<!-- Add this div right here -->
 		<div id="touch-controls">
-  		  	<button id="left-btn">◀️</button>
-  		  	<button id="right-btn">▶️</button>
-  		  	<button id="jump-btn">⬆️</button>
-  		  	<button id="spin-btn">💥</button>
-		  	<button id="escape-btn">⎋</button>
+  			<button id="btn-up">▲</button>
+  			<button id="btn-left">◀</button>
+  			<button id="btn-down">▼</button>
+  			<button id="btn-right">▶</button>
+  			<button id="btn-jump">A</button>
+  			<button id="btn-escape">Menu</button>
+
 		</div>
+	<script>
+  		const buttons = {
+    			'btn-up': 'ArrowUp',
+    			'btn-down': 'ArrowDown',
+    			'btn-left': 'ArrowLeft',
+    			'btn-right': 'ArrowRight',
+    			'btn-jump': 'KeyA',
+    			'btn-escape': 'Escape'
+  		};
+
+ 		for (const [btnId, key] of Object.entries(buttons)) {
+    			const btn = document.getElementById(btnId);
+    			if (!btn) continue;
+			btn.addEventListener('touchstart', e => {
+      				e.preventDefault();
+      				simulateKeyDown(key);
+    			}, {passive: false});
+    			btn.addEventListener('mousedown', e => {
+      				e.preventDefault();
+      				simulateKeyDown(key);
+    			});
+
+    			btn.addEventListener('touchend', e => {
+      				e.preventDefault();
+      				simulateKeyUp(key);
+   			}, {passive: false});
+    			btn.addEventListener('mouseup', e => {
+      				e.preventDefault();
+      				simulateKeyUp(key);
+    			});
+  		}
+
+  		const keysPressed = new Set();
+
+  		function simulateKeyDown(code) {
+    			if (keysPressed.has(code)) return;
+    			keysPressed.add(code);
+    			window.dispatchEvent(new KeyboardEvent('keydown', {
+      				code,
+      				key: codeToKey(code),
+      				bubbles: true
+    			}));
+  		}
+
+  		function simulateKeyUp(code) {
+    			if (!keysPressed.has(code)) return;
+    			keysPressed.delete(code);
+    			window.dispatchEvent(new KeyboardEvent('keyup', {
+      				code,
+      				key: codeToKey(code),
+      				bubbles: true
+    			}));
+  		}
+
+  		function codeToKey(code) {
+    			if (code.startsWith('Key')) {
+				return code[3].toLowerCase();
+			}	
+			return code;
+  		}
+	</script>
 
 		<textarea id="output" style="display: none;" rows="8"></textarea>
 
