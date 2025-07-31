@@ -123,6 +123,29 @@
 				font-family: 'Lucida Console', Monaco, monospace;
 				outline: none;
 			}
+			#touch-controls {
+  			  position: fixed;
+  			  bottom: 10px;
+  			  width: 100%;
+  			  display: flex;
+  			  justify-content: space-around;
+  			  pointer-events: none;
+  			  z-index: 9999;
+			}
+			#touch-controls button {
+  			  pointer-events: auto;
+  			  font-size: 2.5rem;
+  			  background: rgba(255,255,255,0.15);
+ 			  border: none;
+  			  border-radius: 12px;
+ 			  padding: 10px 20px;
+  			  color: white;
+  			  user-select: none;
+  			  touch-action: manipulation;
+			}
+			#touch-controls button:active {
+ 			  background: rgba(255,255,255,0.5);
+			}
 		</style>
 	</head>
 	<body>
@@ -130,6 +153,15 @@
 		<div id="status" style="display: none;">Downloading...</div>
 		<progress id="progress" value="0" max="100" hidden="hidden"></progress>
 		<canvas id="canvas" onclick="window.focus();" oncontextmenu="event.preventDefault();"></canvas>
+		<!-- Add this div right here -->
+		<div id="touch-controls">
+  		  <button id="left-btn">◀️</button>
+  		  <button id="right-btn">▶️</button>
+  		  <button id="jump-btn">⬆️</button>
+  		  <button id="spin-btn">💥</button>
+		  <button id="escape-btn">⎋</button>
+		</div>
+
 		<textarea id="output" style="display: none;" rows="8"></textarea>
 
 		<script type="text/javascript">
