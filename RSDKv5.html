@@ -196,33 +196,63 @@
   		}
 
   		const keysPressed = new Set();
-
-  		function simulateKeyDown(code) {
+ 		function simulateKeyDown(code) {
     			if (keysPressed.has(code)) return;
     			keysPressed.add(code);
-    			window.dispatchEvent(new KeyboardEvent('keydown', {
-      				code,
-      				key: codeToKey(code),
-      				bubbles: true
-    			}));
+
+    			const key = codeToKey(code);
+
+    			const event = new KeyboardEvent('keydown', {
+      				key: key,
+      				code: code,
+      				keyCode: eventKeyCode(code),
+      				which: eventKeyCode(code),
+      				bubbles: true,
+      				cancelable: true,
+      				composed: true
+    			});
+
+    			window.dispatchEvent(event);
   		}
 
   		function simulateKeyUp(code) {
     			if (!keysPressed.has(code)) return;
     			keysPressed.delete(code);
-    			window.dispatchEvent(new KeyboardEvent('keyup', {
-      				code,
-      				key: codeToKey(code),
-      				bubbles: true
-    			}));
+
+    			const key = codeToKey(code);
+
+    			const event = new KeyboardEvent('keyup', {
+      				key: key,
+      				code: code,
+      				keyCode: eventKeyCode(code),
+      				which: eventKeyCode(code),
+      				bubbles: true,
+      				cancelable: true,
+      				composed: true
+    			});
+
+    			window.dispatchEvent(event);
   		}
+
+  		function eventKeyCode(code) {
+    			switch(code) {
+      				case 'ArrowUp': return 38;
+      				case 'ArrowDown': return 40;
+      				case 'ArrowLeft': return 37;
+      				case 'ArrowRight': return 39;
+      				case 'KeyA': return 65;
+      				case 'Escape': return 27;
+      				default: return 0;
+    			}
+  		}	
 
   		function codeToKey(code) {
     			if (code.startsWith('Key')) {
-				return code[3].toLowerCase();
-			}	
-			return code;
+      				return code[3].toLowerCase();
+    			}
+    			return code;
   		}
+
 	</script>
 
 		<textarea id="output" style="display: none;" rows="8"></textarea>
