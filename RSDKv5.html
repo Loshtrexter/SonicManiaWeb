@@ -180,7 +180,11 @@
       				e.preventDefault();
       				simulateKeyDown(key);
     			}, {passive: false});
-    			btn.addEventListener('mousedown', e => {
+			btn.addEventListener('touchmove', e => {
+  				e.preventDefault();
+			}, { passive: false });
+    			
+			btn.addEventListener('mousedown', e => {
       				e.preventDefault();
       				simulateKeyDown(key);
     			});
