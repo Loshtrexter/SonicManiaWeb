@@ -155,6 +155,23 @@
 		<div id="status" style="display: none;">Downloading...</div>
 		<progress id="progress" value="0" max="100" hidden="hidden"></progress>
 		<canvas id="canvas" onclick="window.focus();" oncontextmenu="event.preventDefault();"></canvas>
+
+		<div id="launcher-screen" style="
+  			position: fixed;
+  			top: 0; left: 0;
+  			width: 100vw;
+  			height: 100vh;
+  			background: black;
+			display: flex;
+  			flex-direction: column;
+  			justify-content: center;
+  			align-items: center;
+  			z-index: 9999;
+		">
+  			<img src="icons/icon-192.png" width="128" height="128" alt="Sonic Mania Icon" />
+  			<h2 style="color: white; margin-top: 20px;">Tap to Start</h2>
+		</div>
+
 		<!-- Add this div right here -->
 		<div id="touch-controls">
   			<button id="btn-up">▲</button>
@@ -356,5 +373,10 @@
 			};
 		</script>
 		<script async="async" defer="defer" type="text/javascript" src="RSDKv5.js"></script>
+		<script>
+  			document.getElementById("launcher-screen").addEventListener("click", () => {
+    				document.getElementById("launcher-screen").style.display = "none";
+  			});
+		</script>
 	</body>
 </html>
