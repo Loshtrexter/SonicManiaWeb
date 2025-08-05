@@ -10,4 +10,3 @@ https://drive.google.com/file/d/1pUF_1w0GgpZP80K8Znqd3BQkFq4l_NDM/view?usp=shari
 
 <img width="2385" height="1311" alt="image" src="https://github.com/user-attachments/assets/0b0b933b-c264-494a-95ef-b6d2b6ace8d2" />
 
-](https://3duser-sys.github.io/SonicManiaWeb/)
