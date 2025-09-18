@@ -1,7 +1,7 @@
 YES!! 
 
 I made the VinMaine Sonic Mania web mobile, with work in the javascript file, and the html.
-
+Update! controllers work, including joy cons.
 Sonic mania web ios looks like
 
 https://drive.google.com/file/d/1pUF_1w0GgpZP80K8Znqd3BQkFq4l_NDM/view?usp=sharing
